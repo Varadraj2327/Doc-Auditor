@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="result-wrapper">
+    <div class="result-header">
+        <h2>Report: {{ doc.filename }}</h2>
+        <span class="status-badge {{ doc.status.lower() }}" style="font-size: 18px; padding: 6px 16px;">Output: {{ doc.status }}</span>
+    </div>
+
+    <h3>Extracted Fields</h3>
+    <div class="field-grid">
+        <div class="field-item">
+            <span class="label">GST ID</span>
+            <span class="val">{{ details.fields.gst_id or 'Not Found' }}</span>
+        </div>
+        <div class="field-item">
+            <span class="label">Invoice Number</span>
+            <span class="val">{{ details.fields.invoice_number or 'Not Found' }}</span>
+        </div>
+        <div class="field-item">
+            <span class="label">Invoice Date</span>
+            <span class="val">{{ details.fields.invoice_date or 'Not Found' }}</span>
+        </div>
+        <div class="field-item">
+            <span class="label">Total Amount</span>
+            <span class="val">{{ details.fields.total_amount or 'Not Found' }}</span>
+        </div>
+    </div>
+
+    <h3>Validation Checklist</h3>
+    <ul class="check-list">
+        {% for check in details.checks %}
+            <li>
+                {% if 'Valid' in check or 'Present' in check %}
+                    <span class="icon" style="color: var(--success);">✔</span>
+                {% else %}
+                    <span class="icon" style="color: var(--error);">❌</span>
+                {% endif %}
+                <span style="font-weight: 500;">{{ check }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if details.reasons %}
+    <div style="background-color: var(--error-bg); padding: 20px; border-radius: 8px; margin-bottom: 40px; border: 1px solid var(--error);">
+        <h3 style="color: var(--error); margin-bottom: 12px; font-size: 16px;">Rejection Reasons</h3>
+        <ul style="padding-left: 20px; color: var(--error);">
+            {% for reason in details.reasons %}
+                <li>{{ reason }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="text-center" style="margin-top: 40px;">
+        <a href="{{ url_for('upload') }}" class="btn-primary">Upload Another</a>
+        <a href="{{ url_for('dashboard') }}" class="btn-outline" style="margin-left: 10px; display: inline-block; padding: 12px 24px; border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary);">Dashboard</a>
+    </div>
+</div>
+{% endblock %}

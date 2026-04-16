@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <h2 class="text-center">{% if is_signup %}Create an Account{% else %}Welcome Back{% endif %}</h2>
+    <p class="text-center">{% if is_signup %}Start analyzing your documents today.{% else %}Log in to your dashboard.{% endif %}</p>
+    
+    <form method="POST" action="{{ url_for('signup' if is_signup else 'login') }}">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" required autocomplete="username">
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" required autocomplete="current-password">
+        </div>
+        
+        <button type="submit" class="btn-primary btn-block mt-4">{% if is_signup %}Sign Up{% else %}Log In{% endif %}</button>
+    </form>
+    
+    <p class="text-center" style="margin-top: 24px;">
+        {% if is_signup %}
+            Already have an account? <a href="{{ url_for('login') }}">Log in here</a>.
+        {% else %}
+            Don't have an account? <a href="{{ url_for('signup') }}">Sign up now</a>.
+        {% endif %}
+    </p>
+</div>
+{% endblock %}

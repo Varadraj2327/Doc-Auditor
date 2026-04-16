@@ -1,0 +1,17 @@
+2026-04-16 00:46:38,897 | INFO | Starting audit for file: sample_docs\invoice_pass.pdf
+2026-04-16 00:46:38,899 | ERROR | Extraction failed: Unable to extract text from invoice_fail.pdf. Details: pdfplumber: No module named 'pdfplumber'; PyPDF2: No module named 'PyPDF2'
+2026-04-16 00:46:38,900 | ERROR | Extraction failed: Unable to extract text from invoice_pass.pdf. Details: pdfplumber: No module named 'pdfplumber'; PyPDF2: No module named 'PyPDF2'
+2026-04-16 00:47:36,849 | INFO | Starting audit for file: sample_docs\invoice_pass.pdf
+2026-04-16 00:47:36,851 | ERROR | Extraction failed: Unable to extract text from invoice_pass.pdf. Details: pdfplumber: No module named 'pdfplumber'; PyPDF2: No module named 'PyPDF2'
+2026-04-16 00:47:36,855 | INFO | Starting audit for file: sample_docs\invoice_fail.pdf
+2026-04-16 00:47:36,859 | ERROR | Extraction failed: Unable to extract text from invoice_fail.pdf. Details: pdfplumber: No module named 'pdfplumber'; PyPDF2: No module named 'PyPDF2'
+2026-04-16 00:48:43,655 | INFO | Starting audit for file: sample_docs\invoice_fail.pdf
+2026-04-16 00:48:43,657 | INFO | Starting audit for file: sample_docs\invoice_pass.pdf
+2026-04-16 00:48:57,706 | INFO | Starting audit for file: sample_docs\invoice_fail.pdf
+2026-04-16 00:48:57,719 | INFO | Starting audit for file: sample_docs\invoice_pass.pdf
+2026-04-16 00:48:58,246 | INFO | Audit completed with status: FAIL
+2026-04-16 00:48:58,274 | INFO | Audit completed with status: PASS
+2026-04-16 00:49:44,430 | INFO | Starting audit for file: sample_docs\invoice_fail.pdf
+2026-04-16 00:49:44,431 | INFO | Starting audit for file: sample_docs\invoice_pass.pdf
+2026-04-16 00:49:44,937 | INFO | Audit completed with status: FAIL
+2026-04-16 00:49:44,950 | INFO | Audit completed with status: PASS

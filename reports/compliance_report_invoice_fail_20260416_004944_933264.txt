@@ -1,0 +1,22 @@
+--- Compliance Report ---
+Source File: invoice_fail.pdf
+Generated At: 2026-04-16T00:49:44
+
+Status: FAIL
+
+Field Summary:
+- GST ID: Not Found
+- Invoice Number: INV-2026-002
+- Date: Not Found
+- Total Amount: Not Found
+
+Validation Checks:
+[FAIL] GST ID: Missing
+[OK] Invoice Number: Present
+[FAIL] Date: Missing
+[FAIL] Total Amount: Missing
+
+Reasons:
+- GST ID is missing.
+- Invoice date is missing.
+- Total amount is missing.

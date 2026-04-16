@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <h2>Dashboard Overview</h2>
+    <a href="{{ url_for('upload') }}" class="btn-primary">Upload Document</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Documents</h3>
+        <div class="value">{{ total }}</div>
+    </div>
+    <div class="stat-card" style="border-top: 3px solid var(--success);">
+        <h3>Passed Validation</h3>
+        <div class="value" style="color: var(--success);">{{ passed }}</div>
+    </div>
+    <div class="stat-card" style="border-top: 3px solid var(--error);">
+        <h3>Failed Validation</h3>
+        <div class="value" style="color: var(--error);">{{ failed }}</div>
+    </div>
+</div>
+
+<h3>Recent Uploads</h3>
+{% if recent %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Document Name</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for doc in recent %}
+        <tr>
+            <td>{{ doc.filename }}</td>
+            <td>{{ doc.created_at[:16] }}</td>
+            <td>
+                <span class="status-badge {{ doc.status.lower() }}">{{ doc.status }}</span>
+            </td>
+            <td>
+                <a href="{{ url_for('result', doc_id=doc.id) }}">View Audit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No documents uploaded yet. Start by uploading an invoice.</p>
+{% endif %}
+{% endblock %}

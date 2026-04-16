@@ -1,0 +1,22 @@
+{
+  "source_file": "invoice_fail.pdf",
+  "generated_at": "2026-04-16T00:49:44",
+  "status": "FAIL",
+  "extracted_fields": {
+    "gst_id": null,
+    "invoice_number": "INV-2026-002",
+    "invoice_date": null,
+    "total_amount": null
+  },
+  "checks": [
+    "GST ID: Missing",
+    "Invoice Number: Present",
+    "Date: Missing",
+    "Total Amount: Missing"
+  ],
+  "reasons": [
+    "GST ID is missing.",
+    "Invoice date is missing.",
+    "Total amount is missing."
+  ]
+}

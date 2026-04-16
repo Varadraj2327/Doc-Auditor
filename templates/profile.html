@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-wrapper" style="max-width: 600px;">
+    <h2>Profile Settings</h2>
+    
+    <div style="border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-top: 24px;">
+        <div class="field-grid" style="margin-bottom: 0;">
+            <div class="field-item">
+                <span class="label">Username</span>
+                <span class="val">{{ g.user.username }}</span>
+            </div>
+            <div class="field-item">
+                <span class="label">Account Created</span>
+                <span class="val">{{ g.user.created_at[:10] }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('logout') }}" class="btn-primary" style="background-color: var(--error);">Log Out</a>
+    </div>
+</div>
+{% endblock %}

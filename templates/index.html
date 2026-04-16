@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block full_width_content %}
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-text">
+        <h1 class="hero-title">Automate Document Compliance in Seconds</h1>
+        <p class="hero-subtitle">Upload invoices and instantly validate them for errors, missing fields, and compliance issues.</p>
+        <div class="hero-cta">
+          <a href="{{ url_for('upload') }}" class="btn-primary">Upload Document</a>
+          <a href="{{ url_for('about') }}" class="btn-outline">Get Started</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+         <div class="abstract-graphic">
+             <div class="circle circle-1"></div>
+             <div class="circle circle-2"></div>
+             <div class="glass-card">
+                 <div class="mock-line" style="width: 70%;"></div>
+                 <div class="mock-line" style="width: 40%;"></div>
+                 <div class="mock-badge pass">Verified</div>
+             </div>
+         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works bg-light">
+    <div class="container text-center">
+      <h2>How It Works</h2>
+      <p class="section-desc">A simple, 3-step solution to ensure compliance fast.</p>
+      
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-icon">1</div>
+          <h3>Upload PDF</h3>
+          <p>Drop your invoice or document into our secure system.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon">2</div>
+          <h3>Analyze Document</h3>
+          <p>Our rule-based engine extracts and validates key fields.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon">3</div>
+          <h3>Get Report</h3>
+          <p>Instantly receive a clear PASS/FAIL compliance result.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="text-center">Key Features</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <h4>Automated Analysis</h4>
+          <p>Read and process complex PDFs automatically.</p>
+        </div>
+        <div class="feature-item">
+          <h4>Data Validation</h4>
+          <p>Ensure GST, Totals, and mandatory fields match.</p>
+        </div>
+        <div class="feature-item">
+          <h4>Instant Results</h4>
+          <p>Get results in seconds instead of hours of manual work.</p>
+        </div>
+        <div class="feature-item">
+          <h4>Error Detection</h4>
+          <p>Identify missing or incorrect data immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits bg-light">
+    <div class="container text-center">
+      <h2>Why Choose Doc-Auditor?</h2>
+      <div class="benefits-list">
+        <span class="benefit-tag">Saves Time</span>
+        <span class="benefit-tag">Reduces Errors</span>
+        <span class="benefit-tag">High Accuracy</span>
+        <span class="benefit-tag">Scalable</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Preview Section -->
+  <section class="demo">
+    <div class="container">
+      <h2 class="text-center">Real-Time Validation</h2>
+      <div class="demo-card">
+        <div class="demo-header">
+           <h3>Invoice #INV-2023</h3>
+           <span class="status-badge fail">COMPLIANCE: FAIL</span>
+        </div>
+        <div class="demo-body">
+           <p class="demo-item"><span>GST ID</span> <span style="color: var(--success);">✔ Valid</span></p>
+           <p class="demo-item"><span>Total Amount</span> <span style="color: var(--error);">❌ Mismatch</span></p>
+           <p class="demo-item"><span>Date</span> <span style="color: var(--success);">✔ Valid</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container text-center">
+      <h2>Ready to streamline your workflow?</h2>
+      <p>Start analyzing your documents now.</p>
+      <a href="{{ url_for('upload') }}" class="btn-primary" style="margin-top: 20px;">Upload Document</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <strong>Doc-Auditor</strong>
+        <p>&copy; 2026. All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Tech Stack</a>
+      </div>
+    </div>
+  </footer>
+{% endblock %}

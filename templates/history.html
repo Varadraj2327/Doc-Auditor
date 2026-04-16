@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <h2>Audit History</h2>
+</div>
+
+<form class="filters" method="GET" action="{{ url_for('history') }}">
+    <input type="text" name="q" placeholder="Search by filename..." class="form-control" style="max-width: 300px;" value="{{ q }}">
+    <select name="status" class="form-control" style="max-width: 150px;">
+        <option value="ALL" {% if status_filter == 'ALL' %}selected{% endif %}>All Status</option>
+        <option value="PASS" {% if status_filter == 'PASS' %}selected{% endif %}>Pass</option>
+        <option value="FAIL" {% if status_filter == 'FAIL' %}selected{% endif %}>Fail</option>
+    </select>
+    <button type="submit" class="btn-primary" style="padding: 12px 24px;">Filter</button>
+</form>
+
+{% if documents %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Document Name</th>
+            <th>Uploaded At</th>
+            <th>Compliance Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for doc in documents %}
+        <tr>
+            <td>{{ doc.filename }}</td>
+            <td>{{ doc.created_at[:16] }}</td>
+            <td>
+                <span class="status-badge {{ doc.status.lower() }}">{{ doc.status }}</span>
+            </td>
+            <td>
+                <a href="{{ url_for('result', doc_id=doc.id) }}">Details</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="text-center" style="padding: 60px 0;">
+    <p>No records found matching your criteria.</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+--- Compliance Report ---
+Source File: invoice_pass.pdf
+Generated At: 2026-04-16T00:48:58
+
+Status: PASS
+
+Field Summary:
+- GST ID: 27ABCDE1234F1Z5
+- Invoice Number: Invoice
+- Date: 14/04/2026
+- Total Amount: 12500.75
+
+Validation Checks:
+[OK] GST ID: Valid
+[OK] Invoice Number: Present
+[OK] Date: Valid
+[OK] Total Amount: Valid
+
+Reasons:
+- No compliance issues found.

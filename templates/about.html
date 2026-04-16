@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="result-wrapper" style="text-align: left;">
+    <h2>About Doc-Auditor</h2>
+    <p style="font-size: 16px;">
+        Doc-Auditor is a compliance automation platform built to streamline the auditing process 
+        for accounting and administrative teams. By utilizing regular expressions and PDF parsing heuristics, 
+        it guarantees data accuracy against customized requirements.
+    </p>
+    
+    <h3 style="margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">How It Works</h3>
+    <ul style="padding-left: 20px; line-height: 1.8; margin-top: 16px; color: var(--text-secondary);">
+        <li><strong>1. File Ingestion:</strong> Securely uploads PDF invoices into internal systems.</li>
+        <li><strong>2. Text Extraction:</strong> Converts vectorized and OCR paths into raw textual string data via pdfplumber.</li>
+        <li><strong>3. Rule Engines:</strong> Locates GST IDs, Invoice metadata, and Total amounts using RegEx.</li>
+        <li><strong>4. Validation Logs:</strong> Saves historical data inside a secure SQLite database for audit trails.</li>
+    </ul>
+
+    <h3 style="margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Technology Stack</h3>
+    <p style="margin-top: 16px;">
+        Powered by Python, Flask, SQLite, and a zero-dependency futuristic CSS architectural model.
+    </p>
+
+    <div class="mt-4">
+        <a href="{{ url_for('signup') }}" class="btn-primary">Get Started</a>
+    </div>
+</div>
+{% endblock %}

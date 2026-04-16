@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-wrapper" style="max-width: 600px;">
+    <h2 class="text-center">Upload Document</h2>
+    <p class="text-center">Select a PDF invoice to run compliance rules.</p>
+
+    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="uploadForm">
+        <label class="upload-area" id="dropArea" for="pdf_file">
+            <div id="fileMsg" style="font-weight: 500;">Click to browse or drag PDF here.</div>
+            <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
+        </label>
+
+        <button type="submit" class="btn-primary btn-block" id="submitBtn">Analyze Document</button>
+    </form>
+</div>
+
+<script>
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('pdf_file');
+    const fileMsg = document.getElementById('fileMsg');
+
+    fileInput.addEventListener('change', () => {
+        if(fileInput.files.length > 0) {
+            fileMsg.textContent = fileInput.files[0].name;
+            dropArea.style.borderColor = 'var(--success)';
+            dropArea.style.backgroundColor = 'var(--success-bg)';
+        } else {
+            fileMsg.textContent = 'Click to browse or drag PDF here.';
+            dropArea.style.borderColor = 'var(--border)';
+            dropArea.style.backgroundColor = 'transparent';
+        }
+    });
+
+    dropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropArea.classList.add('dragover');
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+        dropArea.classList.remove('dragover');
+    });
+
+    dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.classList.remove('dragover');
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            fileInput.dispatchEvent(new Event('change'));
+        }
+    });
+</script>
+{% endblock %}

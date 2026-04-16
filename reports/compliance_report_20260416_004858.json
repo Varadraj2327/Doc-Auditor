@@ -1,0 +1,18 @@
+{
+  "source_file": "invoice_pass.pdf",
+  "generated_at": "2026-04-16T00:48:58",
+  "status": "PASS",
+  "extracted_fields": {
+    "gst_id": "27ABCDE1234F1Z5",
+    "invoice_number": "Invoice",
+    "invoice_date": "14/04/2026",
+    "total_amount": "12500.75"
+  },
+  "checks": [
+    "GST ID: Valid",
+    "Invoice Number: Present",
+    "Date: Valid",
+    "Total Amount: Valid"
+  ],
+  "reasons": []
+}
