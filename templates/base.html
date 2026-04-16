@@ -3,48 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doc-Auditor</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}DocAuditor AI{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #ec4899;
+            --bg: #0f172a;
+            --bg-accent: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            --glass: rgba(30, 41, 59, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
+            filter: blur(80px);
+        }
+
+        nav {
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-pass { background: rgba(34, 197, 94, 0.1); color: var(--success); }
+        .status-fail { background: rgba(239, 68, 68, 0.1); color: var(--error); }
+
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            color: var(--text-muted);
+            border-top: 1px solid var(--glass-border);
+            margin-top: 4rem;
+        }
+
+        {% block extra_css %}{% endblock %}
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <a href="{{ url_for('index') }}" class="nav-brand">Doc-Auditor</a>
-            <div class="nav-links">
-                <a href="{{ url_for('index') }}">Home</a>
-                {% if g.user %}
-                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
-                    <a href="{{ url_for('upload') }}">Upload</a>
-                    <a href="{{ url_for('history') }}">History</a>
-                    <a href="{{ url_for('profile') }}">Profile</a>
-                    <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
-                {% else %}
-                    <a href="{{ url_for('about') }}">About</a>
-                    <a href="{{ url_for('login') }}">Login</a>
-                    <a href="{{ url_for('signup') }}" class="btn-outline">Sign Up</a>
-                {% endif %}
-            </div>
+    <div class="bg-glow"></div>
+    <nav>
+        <a href="/" class="logo">
+            <i data-lucide="shield-check"></i>
+            DocAuditor AI
+        </a>
+        <div class="nav-links">
+            <a href="/">Dashboard</a>
+            <a href="/history">History</a>
+            <a href="/upload" class="btn-primary">Upload Doc</a>
         </div>
     </nav>
 
-    <main class="main-content">
-        <div class="container message-container">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul class="flashes">
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
-        </div>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid var(--primary);">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-        {% block full_width_content %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
 
-        <div class="container">
-            {% block content %}{% endblock %}
-        </div>
-    </main>
+    <footer>
+        <p>&copy; 2024 DocAuditor - Intelligent RPA & Compliance</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

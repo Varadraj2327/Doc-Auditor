@@ -1,48 +1,59 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}Audit History | DocAuditor AI{% endblock %}
 
 {% block content %}
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-    <h2>Audit History</h2>
+<div style="margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Audit <span style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">History</span></h1>
+        <p style="color: var(--text-muted);">A permanent record of all audited financial documents.</p>
+    </div>
+    <div style="display: flex; gap: 1rem;">
+        <input type="text" placeholder="Search filename..." style="background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 0.5rem 1rem; border-radius: 8px; outline: none;">
+    </div>
 </div>
 
-<form class="filters" method="GET" action="{{ url_for('history') }}">
-    <input type="text" name="q" placeholder="Search by filename..." class="form-control" style="max-width: 300px;" value="{{ q }}">
-    <select name="status" class="form-control" style="max-width: 150px;">
-        <option value="ALL" {% if status_filter == 'ALL' %}selected{% endif %}>All Status</option>
-        <option value="PASS" {% if status_filter == 'PASS' %}selected{% endif %}>Pass</option>
-        <option value="FAIL" {% if status_filter == 'FAIL' %}selected{% endif %}>Fail</option>
-    </select>
-    <button type="submit" class="btn-primary" style="padding: 12px 24px;">Filter</button>
-</form>
-
-{% if documents %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>Document Name</th>
-            <th>Uploaded At</th>
-            <th>Compliance Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for doc in documents %}
-        <tr>
-            <td>{{ doc.filename }}</td>
-            <td>{{ doc.created_at[:16] }}</td>
-            <td>
-                <span class="status-badge {{ doc.status.lower() }}">{{ doc.status }}</span>
-            </td>
-            <td>
-                <a href="{{ url_for('result', doc_id=doc.id) }}">Details</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<div class="text-center" style="padding: 60px 0;">
-    <p>No records found matching your criteria.</p>
+<div class="glass-card" style="padding: 0; overflow: hidden;">
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead style="background: rgba(255,255,255,0.02); font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+            <tr>
+                <th style="padding: 1.25rem 2rem;">Document</th>
+                <th style="padding: 1.25rem;">Type</th>
+                <th style="padding: 1.25rem;">Amount</th>
+                <th style="padding: 1.25rem;">Compliance</th>
+                <th style="padding: 1.25rem;">Date</th>
+                <th style="padding: 1.25rem 2rem; text-align: right;">Action</th>
+            </tr>
+        </thead>
+        <tbody style="font-size: 0.9rem;">
+            {% for doc in documents %}
+            <tr style="border-top: 1px solid var(--glass-border); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 1.25rem 2rem; font-weight: 600;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i data-lucide="file-text" style="width: 18px; color: var(--text-muted);"></i>
+                        {{ doc.filename }}
+                        {% if doc.is_anomaly %}
+                        <i data-lucide="alert-triangle" style="width: 14px; color: var(--warning);" title="Anomaly Detected"></i>
+                        {% endif %}
+                    </div>
+                </td>
+                <td style="padding: 1.25rem;">{{ doc.doc_type }}</td>
+                <td style="padding: 1.25rem;">{{ doc.total or '0.00' }}</td>
+                <td style="padding: 1.25rem;">
+                    <span class="status-badge {% if doc.status == 'PASS' %}status-pass{% else %}status-fail{% endif %}">{{ doc.status }}</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.5rem;">{{ doc.compliance_score }}%</span>
+                </td>
+                <td style="padding: 1.25rem; color: var(--text-muted);">{{ doc.created_at[:10] }}</td>
+                <td style="padding: 1.25rem 2rem; text-align: right;">
+                    <a href="/result/{{ doc.id }}" style="color: var(--primary); text-decoration: none; font-weight: 600;">View Report</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="padding: 4rem; text-align: center; color: var(--text-muted);">No documents found in history.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-{% endif %}
 {% endblock %}

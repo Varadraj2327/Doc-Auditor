@@ -1,134 +1,63 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block full_width_content %}
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="container hero-container">
-      <div class="hero-text">
-        <h1 class="hero-title">Automate Document Compliance in Seconds</h1>
-        <p class="hero-subtitle">Upload invoices and instantly validate them for errors, missing fields, and compliance issues.</p>
-        <div class="hero-cta">
-          <a href="{{ url_for('upload') }}" class="btn-primary">Upload Document</a>
-          <a href="{{ url_for('about') }}" class="btn-outline">Get Started</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-         <div class="abstract-graphic">
-             <div class="circle circle-1"></div>
-             <div class="circle circle-2"></div>
-             <div class="glass-card">
-                 <div class="mock-line" style="width: 70%;"></div>
-                 <div class="mock-line" style="width: 40%;"></div>
-                 <div class="mock-badge pass">Verified</div>
-             </div>
-         </div>
-      </div>
-    </div>
-  </section>
+{% block title %}Dashboard | DocAuditor AI{% endblock %}
 
-  <!-- How It Works Section -->
-  <section class="how-it-works bg-light">
-    <div class="container text-center">
-      <h2>How It Works</h2>
-      <p class="section-desc">A simple, 3-step solution to ensure compliance fast.</p>
-      
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-icon">1</div>
-          <h3>Upload PDF</h3>
-          <p>Drop your invoice or document into our secure system.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-icon">2</div>
-          <h3>Analyze Document</h3>
-          <p>Our rule-based engine extracts and validates key fields.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-icon">3</div>
-          <h3>Get Report</h3>
-          <p>Instantly receive a clear PASS/FAIL compliance result.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+{% block content %}
+<div style="margin-bottom: 3rem;">
+    <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Intelligent <span style="background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Analytics</span></h1>
+    <p style="color: var(--text-muted);">Real-time compliance monitoring and document intelligence.</p>
+</div>
 
-  <!-- Features Section -->
-  <section class="features">
-    <div class="container">
-      <h2 class="text-center">Key Features</h2>
-      <div class="features-grid">
-        <div class="feature-item">
-          <h4>Automated Analysis</h4>
-          <p>Read and process complex PDFs automatically.</p>
-        </div>
-        <div class="feature-item">
-          <h4>Data Validation</h4>
-          <p>Ensure GST, Totals, and mandatory fields match.</p>
-        </div>
-        <div class="feature-item">
-          <h4>Instant Results</h4>
-          <p>Get results in seconds instead of hours of manual work.</p>
-        </div>
-        <div class="feature-item">
-          <h4>Error Detection</h4>
-          <p>Identify missing or incorrect data immediately.</p>
-        </div>
-      </div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div class="glass-card" style="text-align: center;">
+        <div style="color: var(--text-muted); margin-bottom: 0.5rem; font-size: 0.9rem;">Total Processed</div>
+        <div style="font-size: 2rem; font-weight: 800;">{{ stats.total }}</div>
     </div>
-  </section>
+    <div class="glass-card" style="text-align: center;">
+        <div style="color: var(--success); margin-bottom: 0.5rem; font-size: 0.9rem;">Passed Compliance</div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--success);">{{ stats.passed }}</div>
+    </div>
+    <div class="glass-card" style="text-align: center;">
+        <div style="color: var(--error); margin-bottom: 0.5rem; font-size: 0.9rem;">Failed Audits</div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--error);">{{ stats.failed }}</div>
+    </div>
+    <div class="glass-card" style="text-align: center;">
+        <div style="color: var(--warning); margin-bottom: 0.5rem; font-size: 0.9rem;">Anomalies Detected</div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--warning);">{{ stats.anomalies }}</div>
+    </div>
+</div>
 
-  <!-- Benefits Section -->
-  <section class="benefits bg-light">
-    <div class="container text-center">
-      <h2>Why Choose Doc-Auditor?</h2>
-      <div class="benefits-list">
-        <span class="benefit-tag">Saves Time</span>
-        <span class="benefit-tag">Reduces Errors</span>
-        <span class="benefit-tag">High Accuracy</span>
-        <span class="benefit-tag">Scalable</span>
-      </div>
+<div class="glass-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.25rem;">Recent Activity</h2>
+        <a href="/history" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">View All</a>
     </div>
-  </section>
-
-  <!-- Demo Preview Section -->
-  <section class="demo">
-    <div class="container">
-      <h2 class="text-center">Real-Time Validation</h2>
-      <div class="demo-card">
-        <div class="demo-header">
-           <h3>Invoice #INV-2023</h3>
-           <span class="status-badge fail">COMPLIANCE: FAIL</span>
+    
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+        {% for doc in recent %}
+        <div style="background: rgba(255,255,255,0.03); padding: 1.25rem; border-radius: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="background: rgba(99, 102, 241, 0.1); padding: 0.75rem; border-radius: 10px;">
+                    <i data-lucide="file-text" style="color: var(--primary);"></i>
+                </div>
+                <div>
+                    <div style="font-weight: 600;">{{ doc.filename }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">{{ doc.doc_type }} • {{ doc.created_at[:16] }}</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <div style="text-align: right;">
+                    <div style="font-weight: 700; font-size: 0.9rem;">Score: {{ doc.compliance_score }}%</div>
+                    {% if doc.is_anomaly %}
+                    <div style="font-size: 0.7rem; color: var(--warning); font-weight: 600;">⚠️ ANOMALY</div>
+                    {% endif %}
+                </div>
+                <span class="status-badge {% if doc.status == 'PASS' %}status-pass{% else %}status-fail{% endif %}">{{ doc.status }}</span>
+            </div>
         </div>
-        <div class="demo-body">
-           <p class="demo-item"><span>GST ID</span> <span style="color: var(--success);">✔ Valid</span></p>
-           <p class="demo-item"><span>Total Amount</span> <span style="color: var(--error);">❌ Mismatch</span></p>
-           <p class="demo-item"><span>Date</span> <span style="color: var(--success);">✔ Valid</span></p>
-        </div>
-      </div>
+        {% else %}
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">No documents processed yet.</div>
+        {% endfor %}
     </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container text-center">
-      <h2>Ready to streamline your workflow?</h2>
-      <p>Start analyzing your documents now.</p>
-      <a href="{{ url_for('upload') }}" class="btn-primary" style="margin-top: 20px;">Upload Document</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <div class="footer-left">
-        <strong>Doc-Auditor</strong>
-        <p>&copy; 2026. All rights reserved.</p>
-      </div>
-      <div class="footer-links">
-        <a href="{{ url_for('about') }}">About</a>
-        <a href="#">Contact</a>
-        <a href="#">Tech Stack</a>
-      </div>
-    </div>
-  </footer>
+</div>
 {% endblock %}

@@ -1,53 +1,95 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+{% block title %}Upload Document | DocAuditor AI{% endblock %}
 
 {% block content %}
-<div class="auth-wrapper" style="max-width: 600px;">
-    <h2 class="text-center">Upload Document</h2>
-    <p class="text-center">Select a PDF invoice to run compliance rules.</p>
+<div style="max-width: 600px; margin: 4rem auto;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h1 style="font-size: 2rem; margin-bottom: 1rem;">Document <span class="gradient-text">Ingestion</span></h1>
+        <p style="color: var(--text-muted);">Our AI will automatically extract fields, classify the document type, and verify compliance rules.</p>
+    </div>
 
-    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data" id="uploadForm">
-        <label class="upload-area" id="dropArea" for="pdf_file">
-            <div id="fileMsg" style="font-weight: 500;">Click to browse or drag PDF here.</div>
-            <input type="file" name="pdf_file" id="pdf_file" accept=".pdf" required>
-        </label>
-
-        <button type="submit" class="btn-primary btn-block" id="submitBtn">Analyze Document</button>
-    </form>
+    <div class="glass-card" style="padding: 3rem; text-align: center;">
+        <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
+            <div id="drop-zone" style="border: 2px dashed var(--glass-border); border-radius: 20px; padding: 3rem 1.5rem; cursor: pointer; transition: all 0.3s ease;">
+                <div style="background: rgba(99, 102, 241, 0.1); width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i data-lucide="upload-cloud" style="color: var(--primary); width: 32px; height: 32px;"></i>
+                </div>
+                <h3 style="margin-bottom: 0.5rem;">Select PDF Document</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Drag and drop or click to browse files</p>
+                <input type="file" name="file" id="file-input" hidden accept=".pdf">
+            </div>
+            
+            <div id="file-info" style="margin-top: 2rem; display: none;">
+                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <i data-lucide="file" style="color: var(--primary);"></i>
+                        <span id="filename-display" style="font-weight: 500;"></span>
+                    </div>
+                    <i data-lucide="x" style="cursor: pointer; width: 18px; color: var(--text-muted);" id="remove-file"></i>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem;">Start AI Audit</button>
+            </div>
+        </form>
+    </div>
 </div>
 
+<style>
+    .gradient-text {
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    #drop-zone.dragover {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.05);
+        transform: scale(1.02);
+    }
+</style>
+
 <script>
-    const dropArea = document.getElementById('dropArea');
-    const fileInput = document.getElementById('pdf_file');
-    const fileMsg = document.getElementById('fileMsg');
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const fileInfo = document.getElementById('file-info');
+    const filenameDisplay = document.getElementById('filename-display');
+    const removeFile = document.getElementById('remove-file');
 
-    fileInput.addEventListener('change', () => {
-        if(fileInput.files.length > 0) {
-            fileMsg.textContent = fileInput.files[0].name;
-            dropArea.style.borderColor = 'var(--success)';
-            dropArea.style.backgroundColor = 'var(--success-bg)';
-        } else {
-            fileMsg.textContent = 'Click to browse or drag PDF here.';
-            dropArea.style.borderColor = 'var(--border)';
-            dropArea.style.backgroundColor = 'transparent';
+    dropZone.onclick = () => fileInput.click();
+
+    fileInput.onchange = (e) => {
+        if(e.target.files.length > 0) {
+            showFile(e.target.files[0]);
         }
-    });
+    };
 
-    dropArea.addEventListener('dragover', (e) => {
+    dropZone.ondragover = (e) => {
         e.preventDefault();
-        dropArea.classList.add('dragover');
-    });
+        dropZone.classList.add('dragover');
+    };
 
-    dropArea.addEventListener('dragleave', () => {
-        dropArea.classList.remove('dragover');
-    });
+    dropZone.ondragleave = () => {
+        dropZone.classList.remove('dragover');
+    };
 
-    dropArea.addEventListener('drop', (e) => {
+    dropZone.ondrop = (e) => {
         e.preventDefault();
-        dropArea.classList.remove('dragover');
-        if (e.dataTransfer.files.length) {
+        dropZone.classList.remove('dragover');
+        if(e.dataTransfer.files.length > 0) {
             fileInput.files = e.dataTransfer.files;
-            fileInput.dispatchEvent(new Event('change'));
+            showFile(e.dataTransfer.files[0]);
         }
-    });
+    };
+
+    function showFile(file) {
+        filenameDisplay.innerText = file.name;
+        dropZone.style.display = 'none';
+        fileInfo.style.display = 'block';
+    }
+
+    removeFile.onclick = () => {
+        fileInput.value = '';
+        dropZone.style.display = 'block';
+        fileInfo.style.display = 'none';
+    };
 </script>
 {% endblock %}
