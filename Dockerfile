@@ -27,9 +27,9 @@ RUN mkdir -p data uploads models
 EXPOSE 8080
 
 # Define environment variable
-ENV FLASK_APP=app.py
+ENV FLASK_APP=functions/app.py
 ENV PORT=8080
 
 # Run the application
 # Note: Using gunicorn for production
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "functions.app:app"]
